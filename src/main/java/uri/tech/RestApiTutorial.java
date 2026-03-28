@@ -36,10 +36,10 @@ public class RestApiTutorial {
 
         String fileContent = postResponse.body();
         String fileName = "test";
-        CreateFile cf = new CreateFile();
+        
         WriteToFile wtf = new WriteToFile();
 
-        cf.createfile(fileName);
+        
         wtf.writeToFile(fileName,fileContent);
 
 

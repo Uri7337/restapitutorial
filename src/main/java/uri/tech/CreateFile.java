@@ -7,7 +7,7 @@ public class CreateFile {
 
   void createfile(String filename){
     try {
-      File myObj = new File(filename+".jpeg"); // Create File object
+      File myObj = new File("test/"+filename+".jpeg"); // Create File object
       if (myObj.createNewFile()) {           // Try to create the file
         System.out.println("File created: " + myObj.getName());
       } else {
