@@ -4,43 +4,43 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.net.http.HttpResponse.BodyHandlers;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 import com.google.gson.Gson;
 
 public class RestApiTutorial {
     public static void main(String[] args) throws Exception {
         
-        String uri1 = "https://http.cat/404";
+        String catCode = "403";
+        String uri1 = "https://http.cat/"+catCode;
 
         Content content = new Content();
         content.setRandomBody("bob");
 
         Gson gson = new Gson();
-        String jsonRequest = gson.toJson(content);
+        //String jsonRequest = gson.toJson(content);
 
-        HttpRequest postRequest = HttpRequest.newBuilder()
+       HttpRequest getRequest = HttpRequest.newBuilder()
             .uri(new URI(uri1))
-            //different class takes api key from file and puts it here
-            //.header("Authorization", "Config.getApiKey()")
-            //.POST(BodyPublishers.ofString(jsonRequest))
             .GET()
             .build();
 
         HttpClient httpClient = HttpClient.newHttpClient();
         
-        HttpResponse<String> postResponse = httpClient.send(postRequest, BodyHandlers.ofString());
+        //HttpResponse<String> postResponse = httpClient.send(postRequest, BodyHandlers.ofString());
+        HttpResponse<byte[]> response = httpClient.send(getRequest, HttpResponse.BodyHandlers.ofByteArray());
 
-        System.out.println(postResponse.body());
+
+        byte[] imageBytes = response.body();
         //postResponse.body();
 
-        String fileContent = postResponse.body();
-        String fileName = "test";
         
-        WriteToFile wtf = new WriteToFile();
+        String fileName = "test/test"+catCode+".jpg";
+        
+        
+        Files.write(Path.of(fileName), imageBytes);
 
-        
-        wtf.writeToFile(fileName,fileContent);
 
 
     }

@@ -1,4 +1,4 @@
 target/classes/uri/tech/
 Notes.txt
 config.properties
-test/test.*
+test/test*
